@@ -39,6 +39,10 @@ jobs:
               with:
                   apk-path: ${{ env.apk-path }}
 
+            - name: Debug APK Version
+              run: |
+                echo "APK version name: ${{ steps.apk-info.outputs['version-name'] }}"
+
             - name: Commit Changes
               run: |
                   git config --global user.email "apk-artifacts-downloader@github.com"
@@ -85,6 +89,7 @@ jobs:
                   tag_name: ${{ steps.apk-info.outputs.version-name }}
                   name: ${{ env.workflow_name }}
                   body_path: ./data/commit-log.txt
+                  draft: false   # Set draft to false to ensure it's published
 
     rerun-workflow:
         name: Re-run workflow
